@@ -20,7 +20,7 @@ mongoose.connect(db, {useNewUrlParser: true,useUnifiedTopology: true})
 
 //init app
 const app = express();
-let port = 3000
+let port = process.env.PORT//3000
 
 //init cors middleware
 app.use(cors());

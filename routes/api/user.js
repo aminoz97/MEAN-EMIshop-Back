@@ -2,8 +2,65 @@ const express = require("express");
 const router = express.Router();
 const User = require("../../models/user");
 
-
 //CRUD OPERATIONS
+router.post("/register", async (req, res) => {
+  // Create a new user
+
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+    const mail = req.body.mail;
+    const solde = 0;
+    const commands = [];
+    const user = new User({
+      username,
+      password,
+      mail,
+      solde,
+      commands
+    });
+    await user.save();
+    const token = await user.generateAuthToken();
+    res.status(201).send({
+      message: "Registred successfully",
+      status: "success",
+      user: user,
+      token: token
+    });
+  } catch (error) {
+    res.status(400).send(error);
+    console.log(error);
+  }
+});
+
+router.post("/login", async (req, res) => {
+  //Login a registered user
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+    const user = await User.findByCredentials(username, password);
+    if (!user) {
+      return res
+        .status(401)
+        .send({ error: "Login failed! Check authentication credentials" });
+    }
+    const token = await user.generateAuthToken();
+    res.status(201).send({
+      message: "Login Success",
+      status: "success",
+      user: user,
+      token: token
+    });
+  } catch (error) {
+    res.status(400).send(error);
+    console.log(error);
+  }
+});
+
+module.exports = router;
+
+///////////////////////////////////////
+/*
 router.get("/", (req, res, next) => {
   User.find()
     .then(users => {
@@ -88,3 +145,4 @@ router.delete("/:id", (req, res, next) => {
 });
 
 module.exports = router;
+*/
