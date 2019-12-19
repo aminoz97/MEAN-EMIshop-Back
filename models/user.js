@@ -76,4 +76,19 @@ userSchema.statics.findByCredentials = async (username, /*mail,*/ password) => {
   return user;
 };
 
-module.exports = mongoose.model("User", userSchema);
+userSchema.statics.checkValidity = async (username, mail) => {
+  // Search for a user by email and password.
+  const user = await User.findOne({ username });
+  if (!user) {
+    const user = await User.findOne({ mail });
+  } else {
+    return "This username already registred";
+  }
+  if (!user) {
+    return "This mails is  already used";
+  } else return "valid for registration";
+};
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;

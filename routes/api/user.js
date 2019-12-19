@@ -5,11 +5,19 @@ const User = require("../../models/user");
 //CRUD OPERATIONS
 router.post("/register", async (req, res) => {
   // Create a new user
-
   try {
     const username = req.body.username;
     const password = req.body.password;
     const mail = req.body.mail;
+    const validity = await User.checkValidity(username, mail);
+    if (validity != "valid for registration") {
+      res.status(400).send({
+        message: "Registration Failed",
+        status: "failed",
+        reason: validity
+      });
+      return;
+    }
     const solde = 0;
     const commands = [];
     const user = new User({
@@ -48,7 +56,7 @@ router.post("/login", async (req, res) => {
     res.status(201).send({
       message: "Login Success",
       status: "success",
-      user: user,
+      user: user._id,
       token: token
     });
   } catch (error) {
@@ -59,8 +67,8 @@ router.post("/login", async (req, res) => {
 
 module.exports = router;
 
-///////////////////////////////////////
-/*
+/////////////////ADMIN FUNCTIONS//////////////////////
+
 router.get("/", (req, res, next) => {
   User.find()
     .then(users => {
@@ -68,41 +76,6 @@ router.get("/", (req, res, next) => {
     })
     .catch(err => console.log(err));
 });
-router.get("/:id", (req, res, next) => {
-  let id = req.params.id;
-  User.findById(id)
-    .then(user => {
-      res.json(user);
-    })
-    .catch(err => console.log(err));
-});
-
-router.post("/", (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const mail = req.body.mail;
-  const solde = 0;
-  const commands = []
-  newUser = new User({
-    username,
-    password,
-    mail,
-    solde,
-    commands
-  });
-  newUser
-    .save()
-    .then(user => {
-      //res.json(user);
-      res.send({
-        message: "User Added successfully",
-        status: "success",
-        user: user
-      });
-    })
-    .catch(err => console.log(err));
-});
-
 router.put("/:id", (req, res, next) => {
   let id = req.params.id;
   let user = User.findById(id)
@@ -145,4 +118,3 @@ router.delete("/:id", (req, res, next) => {
 });
 
 module.exports = router;
-*/
