@@ -5,12 +5,14 @@ const User = require("../../models/user");
 //CRUD OPERATIONS
 router.post("/register", async (req, res) => {
   // Create a new user
+  console.log(req.body);
   try {
+
     const username = req.body.username;
     const password = req.body.password;
     const mail = req.body.mail;
     const validity = await User.checkValidity(username, mail);
-    if (validity != "valid for registration") {
+    if (validity !== "valid for registration") {
       res.status(400).send({
         message: "Registration Failed",
         status: "failed",

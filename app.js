@@ -43,12 +43,12 @@ app.get('/', function (req, res) {
     res.send('<h1>hello world!</h1>'+a)
 })
 
-const productRoutes= require('./routes/api/product')
-app.use('/api/product',productRoutes)
-const commandRoutes= require('./routes/api/command')
-app.use('/api/command',commandRoutes)
-const userRoutes= require('./routes/api/user')
-app.use('/api/user',userRoutes)
+const productRoutes= require('./routes/api/product');
+app.use('/api/product',productRoutes);
+const commandRoutes= require('./routes/api/command');
+app.use('/api/command',commandRoutes);
+const userRoutes= require('./routes/api/user');
+app.use('/api/user',userRoutes);
 
 //Starting server
 app.listen(port, function () {
