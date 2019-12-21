@@ -11,6 +11,10 @@ const productSchema = new Schema({
     type: String,
     require: true
   },
+  picUrl: {
+    type: String,
+    require: true
+  },
   categorie: {
     type: String,
     require: true

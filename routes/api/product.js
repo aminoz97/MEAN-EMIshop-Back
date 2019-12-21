@@ -23,6 +23,7 @@ router.get("/:id", (req, res, next) => {
 router.post("/", (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
+  const picUrl = req.body.picUrl;
   const categorie = req.body.categorie;
   const price = req.body.price;
   const like = 0;
@@ -30,6 +31,7 @@ router.post("/", (req, res, next) => {
   newProduct = new Product({
     title,
     description,
+    picUrl,
     categorie,
     price,
     like,
@@ -53,7 +55,7 @@ router.put("/:id", (req, res, next) => {
   let product = Product.findById(id)
     .then(product => {
       product.title = req.body.title;
-      product.title = req.body.title;
+      product.picUrl = req.body.picUrl;
       product.description = req.body.description;
       product.categorie = req.body.categorie;
       product.price = req.body.price;
