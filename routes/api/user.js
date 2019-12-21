@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../../models/user");
-
+const auth = require("../../config/auth.js")
 //CRUD OPERATIONS
 router.post("/register", async (req, res) => {
   // Create a new user
@@ -77,6 +77,9 @@ router.get("/", (req, res, next) => {
       res.json(users);
     })
     .catch(err => console.log(err));
+});
+router.get("/me",auth,(req,res)=>{
+  res.send(req.user)
 });
 router.put("/:id", (req, res, next) => {
   let id = req.params.id;
