@@ -136,4 +136,20 @@ router.put("/dislike/:id", (req, res, next) => {
     })
     .catch(err => console.log(err));
 });
+
+
+
+//////////////REACHERCHE//////////////// MOT COMPLET ////////////////
+
+router.get("/search/:text", (req, res, next) => {
+  let search = req.params.text;
+  Product.find({$text: {$search: search}})
+       .then(product => {
+        res.json(product);
+      })
+      .catch(err => console.log(err));
+});
+
+/////////////////////////////////////////////////////////////////////
+
 module.exports = router;
