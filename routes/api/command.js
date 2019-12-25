@@ -20,6 +20,14 @@ router.get("/:id", (req, res, next) => {
     })
     .catch(err => console.log(err));
 });
+router.get("/:idUser", (req, res, next) => {
+  let id = req.params.idUser;
+  Command.findById(id)
+    .then(Command => {
+      res.json(Command);
+    })
+    .catch(err => console.log(err));
+});
 
 router.post("/", (req, res, next) => {
   const user = req.body.user;
@@ -94,5 +102,19 @@ router.delete("/:id", (req, res, next) => {
     })
     .catch(err => console.log(err));
 });
+
+
+//////////////REACHERCHE//////////////// ID COMPLET ////////////////
+
+router.get("/user/:id", (req, res, next) => {
+  let search = req.params.id;
+  Command.find({'user': search})
+  .then(Command => {
+    res.json(Command);
+  })
+  .catch(err => console.log(err));
+});
+
+/////////////////////////////////////////////////////////////////////
 
 module.exports = router;

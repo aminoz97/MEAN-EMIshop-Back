@@ -19,4 +19,7 @@ const commandeSchema = new Schema({
   products: [{ type: ObjectId, ref: "product" }],
   quantity:[Number]
 });
+
+commandeSchema.index({'$**': 'text'});
+
 module.exports = mongoose.model("Command", commandeSchema);

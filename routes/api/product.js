@@ -97,7 +97,7 @@ router.delete("/:id", (req, res, next) => {
 
 //SPECIAL OPERATIONS
 //Like
-router.put("/like/:id", (req, res, next) => {
+router.get("/like/:id", (req, res, next) => {
   let id = req.params.id;
   let product = Product.findById(id)
     .then(product => {
@@ -117,7 +117,7 @@ router.put("/like/:id", (req, res, next) => {
     .catch(err => console.log(err));
 });
 //Dislike
-router.put("/dislike/:id", (req, res, next) => {
+router.get("/dislike/:id", (req, res, next) => {
   let id = req.params.id;
   let product = Product.findById(id)
     .then(product => {
