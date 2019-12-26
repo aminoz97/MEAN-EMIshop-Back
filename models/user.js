@@ -31,6 +31,7 @@ const userSchema = new Schema({
     }
   },
   solde: Number,
+  role: String,
   commands: [commandSchema],
   tokens: [
     {
@@ -88,6 +89,8 @@ userSchema.statics.checkValidity = async (username, mail) => {
     return "This username already registred";
   }
 };
+
+userSchema.index({ "$**": "text" });
 
 const User = mongoose.model("User", userSchema);
 

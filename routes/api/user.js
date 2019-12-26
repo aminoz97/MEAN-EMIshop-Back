@@ -122,4 +122,60 @@ router.delete("/:id", (req, res, next) => {
     .catch(err => console.log(err));
 });
 
+
+router.get("/:username", (req, res, next) => {
+  let search = req.params.username;
+  User.find({'username': search})
+  .then(user => {
+    res.json(user);
+  })
+  .catch(err => console.log(err));
+});
+
+router.get("/role/admin/:id", (req, res, next) => {
+  let id = req.params.id;
+  let user = User.findById(id)
+    .then(user => {
+      user.role = "admin";
+      user.save()
+        .then(user => {
+          //res.json(user);
+          res.send({
+            message: "User Updated successfully",
+            status: "success",
+            user: user
+          });
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+});
+router.get("/role/user/:id", (req, res, next) => {
+  let id = req.params.id;
+  let user = User.findById(id)
+    .then(user => {
+      user.role = "user";
+      user.save()
+        .then(user => {
+          //res.json(user);
+          res.send({
+            message: "User Updated successfully",
+            status: "success",
+            user: user
+          });
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+});
+
+router.get("/token/:tok", (req, res, next) => {
+  let search = req.params.tok;
+  User.findOne({$text: {$search: search}})
+       .then(user => {
+        res.json(user);
+      })
+      .catch(err => console.log(err));
+});
+
 module.exports = router;
